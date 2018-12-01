@@ -6,8 +6,8 @@
 package Vista;
 
 import Logica.Plus;
+import Logica.Position;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,24 +15,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Manyor
  */
-public class frmPlusesManager extends javax.swing.JInternalFrame {
-
-    ArrayList<Plus> plusesArrayList;
+public class frmPositionManager extends javax.swing.JInternalFrame {
+    
+     ArrayList<Position> positionArrayList;
     DefaultTableModel modelList = new DefaultTableModel();
-    String titulos[] = {"ID", "Title", "Percent"};
-    Plus plusObj = new Plus();
+    String[] titles = {"ID", "Title", "Percent"};
+    Position positionObj = new Position();
 
     /**
-     * Creates new form frmGestionPluses
+     * Creates new form frmPuestos
      */
-    public frmPlusesManager() {
+    public frmPositionManager() {
         initComponents();
+    }
+       public frmPositionManager(frmMain aThis,ArrayList<Position> arrayList) {
+        initComponents();
+          this.positionArrayList = arrayList;
     }
 
-    public frmPlusesManager(frmMain aThis, ArrayList<Plus> arrayList) {
-        initComponents();
-        this.plusesArrayList = arrayList;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,55 +43,23 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btnAdd = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtPosition = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtSalary = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPluses = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int vColIndex) {
                 return false;
             }};
-            jPanel1 = new javax.swing.JPanel();
-            btnAdd = new javax.swing.JButton();
-            btnUpdate = new javax.swing.JButton();
-            btnDelete = new javax.swing.JButton();
-            jLabel1 = new javax.swing.JLabel();
-            txtTitle = new javax.swing.JTextField();
-            jLabel2 = new javax.swing.JLabel();
-            txtId = new javax.swing.JTextField();
-            txtPercent = new javax.swing.JTextField();
-            jLabel3 = new javax.swing.JLabel();
 
             setClosable(true);
-            addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-                public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-                    formInternalFrameActivated(evt);
-                }
-                public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-                }
-                public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-                }
-                public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
-                }
-                public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
-                }
-                public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-                }
-                public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                }
-            });
-
-            tblPluses.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-
-                }
-            ));
-            tblPluses.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblPlusesMouseClicked(evt);
-                }
-            });
-            jScrollPane1.setViewportView(tblPluses);
 
             jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -118,7 +86,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
 
             jLabel1.setText("Id:");
 
-            jLabel2.setText("Title:");
+            jLabel2.setText("Posotion:");
 
             txtId.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,32 +94,32 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                 }
             });
 
-            txtPercent.addActionListener(new java.awt.event.ActionListener() {
+            txtSalary.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    txtPercentActionPerformed(evt);
+                    txtSalaryActionPerformed(evt);
                 }
             });
 
-            jLabel3.setText("%:");
+            jLabel3.setText("Salary:");
 
             javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             jPanel1.setLayout(jPanel1Layout);
             jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(23, 23, 23)
                     .addComponent(jLabel1)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(15, 15, 15)
                     .addComponent(jLabel2)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(30, 30, 30)
+                    .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(64, 64, 64)
                     .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(txtPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                     .addComponent(btnAdd)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnUpdate)
@@ -162,31 +130,44 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
             jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(23, 23, 23)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnDelete)))
-                    .addContainerGap(24, Short.MAX_VALUE))
+                    .addGap(34, 34, 34)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnDelete)
+                        .addComponent(jLabel1)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
+
+            tblPluses.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+
+                }
+            ));
+            tblPluses.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblPlusesMouseClicked(evt);
+                }
+            });
+            jScrollPane1.setViewportView(tblPluses);
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane1)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -194,7 +175,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGap(18, 18, 18)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
@@ -205,9 +186,9 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         if (txtId.isEnabled()) {
-            if (!txtId.getText().isEmpty() && !txtTitle.getText().isEmpty() && !txtPercent.getText().isEmpty()) {
-                plusObj = new Plus(Integer.parseInt(txtId.getText()), txtTitle.getText(), Float.parseFloat(txtPercent.getText()));
-                if (plusesArrayList.add(plusObj)) {
+            if (!txtId.getText().isEmpty() && !txtPosition.getText().isEmpty() && !txtSalary.getText().isEmpty()) {
+                positionObj = new Position(Integer.parseInt(txtId.getText()), txtPosition.getText(), Float.parseFloat(txtSalary.getText()));
+                if (positionArrayList.add(positionObj)) {
                     cleanFields();
                     fillTable();
                     JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
@@ -229,11 +210,11 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         //TODO add your handling code here:
         txtId.setEnabled(true);
-        if (!txtId.getText().isEmpty() && !txtTitle.getText().isEmpty() && !txtPercent.getText().isEmpty()) {
-            plusObj = new Plus(Integer.parseInt(txtId.getText()), txtTitle.getText(), Float.parseFloat(txtPercent.getText()));
+        if (!txtId.getText().isEmpty() && !txtPosition.getText().isEmpty() && !txtSalary.getText().isEmpty()) {
+            positionObj = new Position(Integer.parseInt(txtId.getText()), txtPosition.getText(), Float.parseFloat(txtSalary.getText()));
 
             try {
-                plusesArrayList.set(tblPluses.getSelectedRow(), plusObj);
+                positionArrayList.set(tblPluses.getSelectedRow(), positionObj);
                 cleanFields();
                 JOptionPane.showConfirmDialog(null, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
@@ -248,7 +229,6 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
             JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
         }
 
-
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -259,19 +239,19 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
             if (a < 0) {
 
                 JOptionPane.showMessageDialog(null,
-                        "You must select a row");
+                    "You must select a row");
             } else {
 
                 int confirmar = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete this register?");
+                    "Are you sure you want to delete this register?");
 
                 if (JOptionPane.OK_OPTION == confirmar) {
                     try {
-                        plusesArrayList.remove(a);
+                        positionArrayList.remove(a);
                         modelList.removeRow(a);
                         JOptionPane.showMessageDialog(null,
-                                "Register deleted");
-                        if (plusesArrayList.size() > 1) {
+                            "Register deleted");
+                        if (positionArrayList.size() > 1) {
                             fillTable();
 
                         }
@@ -291,36 +271,28 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
-    private void txtPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPercentActionPerformed
+    private void txtSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalaryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPercentActionPerformed
-
-    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        // TODO add your handling code here:
-        if (plusesArrayList.size() > 0) {
-            fillTable();
-        }
-    }//GEN-LAST:event_formInternalFrameActivated
+    }//GEN-LAST:event_txtSalaryActionPerformed
 
     private void tblPlusesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPlusesMouseClicked
         // TODO add your handling code here:
         if (tblPluses.getSelectedRow() >= 0) {
             if (evt.getClickCount() == 2) {
                 txtId.setEnabled(false);
-                txtId.setText(String.valueOf(plusesArrayList.get(tblPluses.getSelectedRow()).getIdPlus()));
-                txtTitle.setText(plusesArrayList.get(tblPluses.getSelectedRow()).getpTitle());
-                txtPercent.setText(String.valueOf(plusesArrayList.get(tblPluses.getSelectedRow()).getPercIncrement()));
+                txtId.setText(String.valueOf(positionArrayList.get(tblPluses.getSelectedRow()).getIdPosition()));
+                txtPosition.setText(positionArrayList.get(tblPluses.getSelectedRow()).getpName());
+                txtSalary.setText(String.valueOf(positionArrayList.get(tblPluses.getSelectedRow()).getSalary()));
             }
         }
     }//GEN-LAST:event_tblPlusesMouseClicked
-   
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {
-        if (plusesArrayList.size() > 0) {
-            modelList = new DefaultTableModel(null, titulos);
-            for (int i = 0; i < plusesArrayList.size(); i++) {
+        if (positionArrayList.size() > 0) {
+            modelList = new DefaultTableModel(null, titles);
+            for (int i = 0; i < positionArrayList.size(); i++) {
 
-                modelList.addRow(new Object[]{plusesArrayList.get(i).getIdPlus(), plusesArrayList.get(i).getpTitle(), plusesArrayList.get(i).getPercIncrement()});
+                modelList.addRow(new Object[]{positionArrayList.get(i).getIdPosition(), positionArrayList.get(i).getpName(), positionArrayList.get(i).getSalary()});
             }
 
             this.tblPluses.setModel(modelList);
@@ -330,8 +302,8 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     //This method is used to clear field data
         private void cleanFields() {
         txtId.setText(null);
-        txtTitle.setText(null);
-        txtPercent.setText(null);
+        txtPosition.setText(null);
+        txtSalary.setText(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -345,8 +317,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPluses;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtPercent;
-    private javax.swing.JTextField txtTitle;
+    private javax.swing.JTextField txtPosition;
+    private javax.swing.JTextField txtSalary;
     // End of variables declaration//GEN-END:variables
-
 }
