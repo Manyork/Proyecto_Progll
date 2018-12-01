@@ -289,7 +289,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                 if (!txtBossDni.getText().isEmpty()) {
                     bossDNI = Integer.parseInt(txtBossDni.getText());
                 } else {
-                    bossDNI = 0;
+                    bossDNI = 0;0
                     }
 
                     collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
