@@ -6,6 +6,8 @@
 package Vista;
 
 import Logica.Collaborator;
+import Logica.Plus;
+import Logica.PlusCollaborator;
 import Logica.Position;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
@@ -22,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
+    ArrayList<Plus> plusesArrayList;
+    ArrayList<PlusCollaborator> plusesCollaborator;
     ArrayList<Collaborator> collaboratorArrayList;
     ArrayList<Position> positionArrayList;
     DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
@@ -41,6 +45,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         initComponents();
         this.collaboratorArrayList = colArrayList;
         this.positionArrayList = posArrayList;
+
     }
 
     /**
@@ -299,49 +304,48 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                     bossDNI = Integer.parseInt(txtBossDni.getText());
                 } else {
                     bossDNI = 0;
-                    }
+                }
 
-                    collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
-                            dtpEndDAte.getDate(), txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
-                            positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())),bossDNI);
-                    if (collaboratorArrayList.add(collaObj)) {
-                        cleanFields();
-                        fillTable();
-                        cmbFillPos();
-                        JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
+                        dtpEndDAte.getDate(), txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
+                        positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())), bossDNI);
+                if (collaboratorArrayList.add(collaObj)) {
+                    cleanFields();
+                    fillTable();
+                    cmbFillPos();
+                    JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
-                    } else {
-                        JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
-                    }
-                }else {
+                } else {
+                    JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                }
+            } else {
 
                 JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
             }
-            } else {
+        } else {
 
-                JOptionPane.showConfirmDialog(null, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(null, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
-            }
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 //        //TODO add your handling code here:
         txtId.setEnabled(true);
         if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !dtpBirthDate.getDate().toString().isEmpty()
-                    && !dtpStarDate.getDate().toString().isEmpty() && !txtDirection.getText().isEmpty() && !txtPhoneNumber.getText().isEmpty()
-                    && !txtEmail.getText().isEmpty() && cmbPosition.getSelectedIndex() != 0) {
-             Integer bossDNI;
-            
-            if (!txtBossDni.getText().isEmpty()) {
-                    bossDNI = Integer.parseInt(txtBossDni.getText());
-                } else {
-                    bossDNI = 0;
-                    }
+                && !dtpStarDate.getDate().toString().isEmpty() && !txtDirection.getText().isEmpty() && !txtPhoneNumber.getText().isEmpty()
+                && !txtEmail.getText().isEmpty() && cmbPosition.getSelectedIndex() != 0) {
+            Integer bossDNI;
 
-          collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
-                            dtpEndDAte.getDate(), txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
-                            positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())),bossDNI);
-          
+            if (!txtBossDni.getText().isEmpty()) {
+                bossDNI = Integer.parseInt(txtBossDni.getText());
+            } else {
+                bossDNI = 0;
+            }
+
+            collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
+                    dtpEndDAte.getDate(), txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
+                    positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())), bossDNI);
 
             try {
                 collaboratorArrayList.set(tblCollaborator.getSelectedRow(), collaObj);
@@ -357,7 +361,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         } else {
 
             JOptionPane.showConfirmDialog(null, "Please, complettxtIdinformation", "Confirm Message", JOptionPane.DEFAULT_OPTION);
-       }
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -368,18 +372,18 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
             if (a < 0) {
 
                 JOptionPane.showMessageDialog(null,
-                    "You must select a row");
+                        "You must select a row");
             } else {
 
                 int confirmar = JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to delete this register?");
+                        "Are you sure you want to delete this register?");
 
                 if (JOptionPane.OK_OPTION == confirmar) {
                     try {
                         positionArrayList.remove(a);
                         modelTable.removeRow(a);
                         JOptionPane.showMessageDialog(null,
-                            "Register deleted");
+                                "Register deleted");
                         if (positionArrayList.size() > 1) {
                             fillTable();
 
@@ -408,7 +412,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         // TODO add your handling code here:
-      cmbFillPos();
+        cmbFillPos();
         fillTable();
 
     }//GEN-LAST:event_formInternalFrameActivated
@@ -419,7 +423,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
     private void tblCollaboratorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCollaboratorMouseClicked
         // TODO add your handling code here:
-         if (tblCollaborator.getSelectedRow() >= 0) {
+        if (tblCollaborator.getSelectedRow() >= 0) {
             if (evt.getClickCount() == 2) {
                 txtId.setEnabled(false);
                 txtId.setText(String.valueOf(collaboratorArrayList.get(tblCollaborator.getSelectedRow()).getDNI()));
@@ -513,9 +517,10 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cmbFillPos() {
-  comboBoxModel.addElement("Please, select an option...");
+        comboBoxModel.addElement("Please, select an option...");
         for (int i = 0; i < positionArrayList.size(); i++) {
             comboBoxModel.addElement(positionArrayList.get(i).getIdPosition() + "-" + positionArrayList.get(i).getpName());
         }
-        cmbPosition.setModel(comboBoxModel);    }
+        cmbPosition.setModel(comboBoxModel);
+    }
 }

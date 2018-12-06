@@ -11,6 +11,7 @@ import Logica.PlusCollaborator;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +24,9 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
     ArrayList<PlusCollaborator> PlusCollaborator;
     ArrayList<Collaborator> collaboratorArrayList;
     DefaultComboBoxModel comboBoxCollab = new DefaultComboBoxModel();
-    DefaultListModel lista1 = new DefaultListModel();
+    DefaultListModel listAssigned = new DefaultListModel();
+    DefaultListModel listUnAssigned = new DefaultListModel();
+    PlusCollaborator pcObj = new PlusCollaborator();
 
     DefaultTableModel temp;
 
@@ -52,13 +55,19 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cmbCollaborators = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstToAssign = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstAssigned = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblasignar = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        TxtName = new javax.swing.JTextField();
+        cmbDNI = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -77,94 +86,113 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
             }
         });
 
-        cmbCollaborators.addItemListener(new java.awt.event.ItemListener() {
+        lstToAssign.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Assign"), "UNASSIGNED"));
+        jScrollPane1.setViewportView(lstToAssign);
+
+        lstAssigned.setBorder(javax.swing.BorderFactory.createTitledBorder("ASSIGNED"));
+        jScrollPane2.setViewportView(lstAssigned);
+
+        jLabel1.setText("DNI:");
+
+        jLabel2.setText("Name:");
+
+        cmbDNI.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDNI.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbCollaboratorsItemStateChanged(evt);
+                cmbDNIItemStateChanged(evt);
             }
         });
 
-        jLabel1.setText("Select a Collaborator:");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(TxtName)
+                    .addComponent(cmbDNI, 0, 220, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cmbDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(TxtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
 
-        tblasignar.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "SELECT PLUS", "IDPLUS", "TITLE", "%INCREMET"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/angle-pointing-to-left.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(tblasignar);
-        if (tblasignar.getColumnModel().getColumnCount() > 0) {
-            tblasignar.getColumnModel().getColumn(2).setResizable(false);
-        }
 
-        jButton5.setText("Add Plus");
-
-        jButton6.setText("Remove Plus");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/next.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbCollaborators, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(456, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbCollaborators, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(44, 44, 44)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
-                .addContainerGap(252, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton2)
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         pack();
@@ -172,52 +200,151 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         // TODO add your handling code here:
-        cmbFillPos();
+        cmbFillCollaborator();
     }//GEN-LAST:event_formInternalFrameActivated
 
-    private void cmbCollaboratorsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCollaboratorsItemStateChanged
+    private void cmbDNIItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDNIItemStateChanged
         // TODO add your handling code here:
-        cmbFillTable(Integer.parseInt(cmbCollaborators.getSelectedItem().toString()));
+        TxtName.setText(null);
+        clearList();
+        if (cmbDNI.getSelectedIndex() != 0) {
+            String dni = cmbDNI.getSelectedItem().toString();
+            TxtName.setText(collaboratorArrayList.get(getArrayColPostion(cmbDNI.getSelectedItem().toString())).getName());
+            ListFill(Integer.parseInt(dni));
+        }
+
+
+    }//GEN-LAST:event_cmbDNIItemStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (!lstToAssign.isSelectionEmpty()) {
+            String dni = cmbDNI.getSelectedItem().toString();
+            pcObj = new PlusCollaborator(plusesArrayList.get(getArrayPlusPostion(lstToAssign.getSelectedValue())), collaboratorArrayList.get(getArrayColPostion(dni)));
+            PlusCollaborator.add(pcObj);
+            ListFill(Integer.parseInt(dni));
+
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         if (!lstAssigned.isSelectionEmpty()) {
+            String dni = cmbDNI.getSelectedItem().toString();
+           PlusCollaborator.remove(getRemovePos(getArrayPlusPostion(lstAssigned.getSelectedValue()),getArrayColPostion(dni)));
+            ListFill(Integer.parseInt(dni));
+
+        }
         
-    }//GEN-LAST:event_cmbCollaboratorsItemStateChanged
-    private void cmbFillPos() {
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private int getArrayColPostion(String text) {
+
+        String arrayCombo[] = text.split("-");
+        Integer pos = Integer.parseInt(arrayCombo[0]);
+
+        for (int i = 0; i < collaboratorArrayList.size(); i++) {
+            if (collaboratorArrayList.get(i).getDNI() == pos) {
+                pos = i;
+                break;
+            }
+        }
+        return pos;
+
+    }
+
+    private int getArrayPlusPostion(String text) {
+        String arrayCombo[] = text.split("-");
+        Integer pos = Integer.parseInt(arrayCombo[0]);
+
+        for (int i = 0; i < plusesArrayList.size(); i++) {
+            if (plusesArrayList.get(i).getIdPlus() == pos) {
+                pos = i;
+                break;
+            }
+        }
+        return pos;
+
+    }
+
+    private void cmbFillCollaborator() {
+        comboBoxCollab.removeAllElements();
+        cmbDNI.setModel(comboBoxCollab);
         comboBoxCollab.addElement("Please, select an option...");
         for (int i = 0; i < collaboratorArrayList.size(); i++) {
             comboBoxCollab.addElement(collaboratorArrayList.get(i).getDNI());
         }
-        cmbCollaborators.setModel(comboBoxCollab);
+        cmbDNI.setModel(comboBoxCollab);
     }
 
-    private void cmbFillTable(int DNI) {
-        boolean rpt;
-        temp = (DefaultTableModel) tblasignar.getModel();
+    private void ListFill(int DNI) {
+        int rpt;
+        clearList();
         for (int i = 0; i < plusesArrayList.size(); i++) {
-           rpt= isAssginned(DNI, plusesArrayList.get(i).getIdPlus());
-          temp.addRow(new Object[]{rpt, plusesArrayList.get(i).getIdPlus(), plusesArrayList.get(i).getpTitle(), plusesArrayList.get(i).getPercIncrement()});
+            rpt = isAssginned(DNI, plusesArrayList.get(i).getIdPlus());
+            switch (rpt) {
+                case 0:
+                    listAssigned.addElement(plusesArrayList.get(i).getIdPlus() + "-" + plusesArrayList.get(i).getpTitle());
+                    ;
+                    break;
+                case 1:
+                    listUnAssigned.addElement(plusesArrayList.get(i).getIdPlus() + "-" + plusesArrayList.get(i).getpTitle());
+                    break;
+
+            }
+
         }
-        tblasignar.setModel(temp);
+        lstAssigned.setModel(listAssigned);
+        lstToAssign.setModel(listUnAssigned);
     }
 
-    private boolean isAssginned(int dni, int idPlus) {
+        private int getRemovePos(int dni, int idPlus) {
 
         for (int i = 0; i < PlusCollaborator.size(); i++) {
-            if (Integer.parseInt(PlusCollaborator.get(i).getIdCollaborator().toString()) == dni && Integer.parseInt(PlusCollaborator.get(i).getIdPlus().toString()) == idPlus) {
-            return true;
+            int collaborator = PlusCollaborator.get(i).getIdCollaborator().getDNI();
+            int plus = PlusCollaborator.get(i).getIdPlus().getIdPlus();
+            if (collaborator == dni && plus == idPlus) {
+                return i;
             }
-           
+        }
+        return 0;
+    }
+    
+    
+    private int isAssginned(int dni, int idPlus) {
+
+        for (int i = 0; i < PlusCollaborator.size(); i++) {
+            int collaborator = PlusCollaborator.get(i).getIdCollaborator().getDNI();
+            int plus = PlusCollaborator.get(i).getIdPlus().getIdPlus();
+            if (collaborator == dni && plus == idPlus) {
+                return 0;
+            }
         }
 
-        return false;
+        return 1;
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbCollaborators;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JTextField TxtName;
+    private javax.swing.JComboBox<String> cmbDNI;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable tblasignar;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> lstAssigned;
+    private javax.swing.JList<String> lstToAssign;
     // End of variables declaration//GEN-END:variables
+
+    private void clearList() {
+
+        listAssigned.removeAllElements();
+        listUnAssigned.removeAllElements();
+        lstAssigned.setModel(listAssigned);
+        lstToAssign.setModel(listUnAssigned);
+    }
 }
