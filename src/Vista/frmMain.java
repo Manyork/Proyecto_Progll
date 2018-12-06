@@ -10,6 +10,7 @@ import Logica.Plus;
 import Logica.PlusCollaborator;
 import Logica.Position;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JInternalFrame;
 
 /**
@@ -82,6 +83,11 @@ public class frmMain extends javax.swing.JFrame {
         jButton3.setContentAreaFilled(false);
         jButton3.setBorderPainted(false
         );
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,6 +203,23 @@ public class frmMain extends javax.swing.JFrame {
         this.plusesArrayList = plusWin.plusesArrayList;
         
     }//GEN-LAST:event_mnuAsignarPlusesActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        java.util.Date fecha = new Date();
+        plusesArrayList.add(new Plus(1, "Plus1", 10));
+        plusesArrayList.add(new Plus(2, "Plus2", 20));
+        plusesArrayList.add(new Plus(3, "Plus2", 30));
+        positionArrayList.add(new Position(1, "Trailero", 3000));
+        positionArrayList.add(new Position(1, "Camionero", 2000));
+        positionArrayList.add(new Position(1, "Busero", 2000));
+        collaboratorArrayList.add(new Collaborator(11532024, "Manyor", fecha, fecha, fecha, "LasJuntas", 85697, "Email", positionArrayList.get(0), 1));
+        collaboratorArrayList.add(new Collaborator(15212123, "Manyor", fecha, fecha, fecha, "LasJuntas", 85697, "Email", positionArrayList.get(1), 0));
+        collaboratorArrayList.add(new Collaborator(45454545, "Manyor", fecha, fecha, fecha, "LasJuntas", 85697, "Email", positionArrayList.get(2), 1));
+        
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 //This method open a Windows and set a default constructor
 
     public void openFrmWindow(JInternalFrame win, String title) {
