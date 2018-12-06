@@ -7,6 +7,7 @@ package Vista;
 
 import Logica.Collaborator;
 import Logica.Plus;
+import Logica.PlusCollaborator;
 import Logica.Position;
 import java.util.ArrayList;
 import javax.swing.JInternalFrame;
@@ -19,10 +20,12 @@ public class frmMain extends javax.swing.JFrame {
 
     ArrayList<Plus> plusesArrayList = new ArrayList<>();
     ArrayList<Position> positionArrayList = new ArrayList<>();
-     ArrayList<Collaborator> collaboratorArrayList = new ArrayList<>();
+    ArrayList<Collaborator> collaboratorArrayList = new ArrayList<>();
+    ArrayList<PlusCollaborator> plusesCollaborator = new ArrayList<>();
     frmPlusesManager plusWin = new frmPlusesManager(null, plusesArrayList);
     frmPositionManager positionWin = new frmPositionManager(this, positionArrayList);
-    frmCollaboratorManager collabWin= new frmCollaboratorManager(this,collaboratorArrayList,positionArrayList);
+    frmCollaboratorManager collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList);
+    frmAsignPlusesCollaborator asignarPlusWin = new frmAsignPlusesCollaborator(this, collaboratorArrayList, plusesArrayList,plusesCollaborator);
 
     /**
      * Creates new form frmPrincipal
@@ -51,6 +54,7 @@ public class frmMain extends javax.swing.JFrame {
         mnuPluses = new javax.swing.JMenuItem();
         mnuPositionMangaer = new javax.swing.JMenuItem();
         mnuCollaboratorManager = new javax.swing.JMenuItem();
+        mnuAsignarPluses = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -132,6 +136,14 @@ public class frmMain extends javax.swing.JFrame {
         });
         jMenu2.add(mnuCollaboratorManager);
 
+        mnuAsignarPluses.setText("Asignar Pluses");
+        mnuAsignarPluses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAsignarPlusesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuAsignarPluses);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -174,11 +186,19 @@ public class frmMain extends javax.swing.JFrame {
     private void mnuCollaboratorManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCollaboratorManagerActionPerformed
         // TODO add your handling code here:
         openFrmWindow(collabWin, "Collaborator Manager");
-        this.collaboratorArrayList=collabWin.collaboratorArrayList;
+        this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.positionArrayList = positionWin.positionArrayList;
     }//GEN-LAST:event_mnuCollaboratorManagerActionPerformed
+
+    private void mnuAsignarPlusesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignarPlusesActionPerformed
+        // TODO add your handling code here:
+        openFrmWindow(asignarPlusWin, "Asignar PLUS");
+        this.collaboratorArrayList = collabWin.collaboratorArrayList;
+        this.plusesArrayList = plusWin.plusesArrayList;
+        
+    }//GEN-LAST:event_mnuAsignarPlusesActionPerformed
 //This method open a Windows and set a default constructor
-    
+
     public void openFrmWindow(JInternalFrame win, String title) {
         if (!win.isShowing()) {
             win.setTitle(title);
@@ -234,6 +254,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuItem mnuAsignarPluses;
     private javax.swing.JMenuItem mnuCollaboratorManager;
     private javax.swing.JMenuItem mnuPluses;
     private javax.swing.JMenuItem mnuPositionMangaer;

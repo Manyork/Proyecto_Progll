@@ -7,7 +7,6 @@ package Vista;
 
 import Logica.Plus;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
