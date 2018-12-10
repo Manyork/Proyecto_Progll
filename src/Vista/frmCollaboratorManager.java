@@ -9,6 +9,8 @@ import Logica.Collaborator;
 import Logica.Plus;
 import Logica.PlusCollaborator;
 import Logica.Position;
+import static Vista.frmMain.dkpPrincipal;
+import java.awt.Component;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +35,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
     Collaborator collaObj = new Collaborator();
     String titulos[] = {"DNI", "NAME", "BIRTH DATE", "STAR DATE", "END DATE", "DIRECTION", "#PHONE", "EMAIL", "POSITION", "BOSS DNI"};
     DateFormat date = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+    frmAsignPlusesCollaborator asignarPlusWin;
 
     /**
      * Creates new form frmCollaboratorManager
@@ -41,11 +44,11 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public frmCollaboratorManager(frmMain aThis, ArrayList<Collaborator> colArrayList, ArrayList<Position> posArrayList) {
+    public frmCollaboratorManager(frmMain aThis, ArrayList<Collaborator> colArrayList, ArrayList<Position> posArrayList, ArrayList<Plus> plusArrayList) {
         initComponents();
         this.collaboratorArrayList = colArrayList;
         this.positionArrayList = posArrayList;
-
+        this.plusesArrayList = plusArrayList;
     }
 
     /**
@@ -66,9 +69,6 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
-        dtpBirthDate = new org.jdesktop.swingx.JXDatePicker();
-        dtpEndDAte = new org.jdesktop.swingx.JXDatePicker();
-        dtpStarDate = new org.jdesktop.swingx.JXDatePicker();
         txtDirection = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -81,6 +81,10 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtBossDni = new javax.swing.JTextField();
         cmbPosition = new javax.swing.JComboBox<>();
+        dtpStarDate = new org.jdesktop.swingx.JXDatePicker();
+        dtpEndDAte = new org.jdesktop.swingx.JXDatePicker();
+        dtpBirthDate = new org.jdesktop.swingx.JXDatePicker();
+        btnAssigPlus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCollaborator = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int vColIndex) {
@@ -160,6 +164,13 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                 }
             });
 
+            btnAssigPlus.setText("Assign plus");
+            btnAssigPlus.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAssigPlusActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             jPanel1.setLayout(jPanel1Layout);
             jPanel1Layout.setHorizontalGroup(
@@ -179,29 +190,31 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtName)
                                 .addComponent(txtId)
-                                .addComponent(dtpEndDAte, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                                .addComponent(txtDirection)
                                 .addComponent(dtpStarDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dtpBirthDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtDirection))
+                                .addComponent(dtpEndDAte, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                                .addComponent(dtpBirthDate, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
                                 .addComponent(jLabel8)
                                 .addComponent(jLabel10)
-                                .addComponent(jLabel9)))
+                                .addComponent(jLabel9))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtBossDni)
+                                .addComponent(txtPhoneNumber)
+                                .addComponent(txtEmail)
+                                .addComponent(cmbPosition, 0, 258, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(243, 243, 243)
                             .addComponent(btnAdd)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnUpdate)
-                            .addGap(1, 1, 1)
-                            .addComponent(btnDelete)))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtBossDni)
-                        .addComponent(txtPhoneNumber)
-                        .addComponent(txtEmail)
-                        .addComponent(cmbPosition, 0, 258, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnDelete)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnAssigPlus)))
                     .addContainerGap(50, Short.MAX_VALUE))
             );
             jPanel1Layout.setVerticalGroup(
@@ -226,24 +239,28 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8))))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dtpBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtBossDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(txtBossDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10))
+                            .addGap(14, 14, 14))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(dtpBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(dtpStarDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addComponent(jLabel9))
+                                    .addComponent(jLabel9)
+                                    .addComponent(dtpStarDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(dtpEndDAte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(10, 10, 10)
+                            .addGap(8, 8, 8)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
                                 .addComponent(txtDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -252,7 +269,8 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdd)
                         .addComponent(btnUpdate)
-                        .addComponent(btnDelete))
+                        .addComponent(btnDelete)
+                        .addComponent(btnAssigPlus))
                     .addContainerGap(55, Short.MAX_VALUE))
             );
 
@@ -423,7 +441,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
     private void tblCollaboratorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCollaboratorMouseClicked
         // TODO add your handling code here:
-        if (tblCollaborator.getSelectedRow() >= 0) {
+        if (tblCollaborator.getSelectedRow() > 0) {
             if (evt.getClickCount() == 2) {
                 txtId.setEnabled(false);
                 txtId.setText(String.valueOf(collaboratorArrayList.get(tblCollaborator.getSelectedRow()).getDNI()));
@@ -439,6 +457,23 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblCollaboratorMouseClicked
+
+    private void btnAssigPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigPlusActionPerformed
+        // TODO add your handling code here:
+
+        if (!asignarPlusWin.isShowing()) {
+            asignarPlusWin = new frmAsignPlusesCollaborator(null, collaboratorArrayList, plusesArrayList, plusesCollaborator);
+            asignarPlusWin.setTitle(title);
+            frmMain.dkpPrincipal.add(asignarPlusWin);
+            asignarPlusWin.toFront();
+            asignarPlusWin.setVisible(true);
+
+        } else {
+            asignarPlusWin.moveToFront();
+        }
+
+
+    }//GEN-LAST:event_btnAssigPlusActionPerformed
 
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {
@@ -489,6 +524,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAssigPlus;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cmbPosition;
@@ -517,6 +553,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cmbFillPos() {
+        comboBoxModel.removeAllElements();
         comboBoxModel.addElement("Please, select an option...");
         for (int i = 0; i < positionArrayList.size(); i++) {
             comboBoxModel.addElement(positionArrayList.get(i).getIdPosition() + "-" + positionArrayList.get(i).getpName());

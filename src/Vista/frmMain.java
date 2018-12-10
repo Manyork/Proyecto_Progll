@@ -6,6 +6,7 @@
 package Vista;
 
 import Logica.Collaborator;
+import Logica.Payroll;
 import Logica.Plus;
 import Logica.PlusCollaborator;
 import Logica.Position;
@@ -20,13 +21,14 @@ import javax.swing.JInternalFrame;
 public class frmMain extends javax.swing.JFrame {
 
     ArrayList<Plus> plusesArrayList = new ArrayList<>();
+    ArrayList<Payroll> payrollArrayList = new ArrayList<>();
     ArrayList<Position> positionArrayList = new ArrayList<>();
     ArrayList<Collaborator> collaboratorArrayList = new ArrayList<>();
     ArrayList<PlusCollaborator> plusesCollaborator = new ArrayList<>();
     frmPlusesManager plusWin = new frmPlusesManager(null, plusesArrayList);
     frmPositionManager positionWin = new frmPositionManager(this, positionArrayList);
-    frmCollaboratorManager collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList);
-    frmAsignPlusesCollaborator asignarPlusWin = new frmAsignPlusesCollaborator(this, collaboratorArrayList, plusesArrayList,plusesCollaborator);
+    frmCollaboratorManager collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList,plusesArrayList);
+    frmPayroll payrollWin = new frmPayroll(this, collaboratorArrayList,payrollArrayList,plusesArrayList,plusesCollaborator);
 
     /**
      * Creates new form frmPrincipal
@@ -142,7 +144,7 @@ public class frmMain extends javax.swing.JFrame {
         });
         jMenu2.add(mnuCollaboratorManager);
 
-        mnuAsignarPluses.setText("Asignar Pluses");
+        mnuAsignarPluses.setText("generate payroll");
         mnuAsignarPluses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuAsignarPlusesActionPerformed(evt);
@@ -194,11 +196,12 @@ public class frmMain extends javax.swing.JFrame {
         openFrmWindow(collabWin, "Collaborator Manager");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.positionArrayList = positionWin.positionArrayList;
+         this.plusesArrayList = plusWin.plusesArrayList;
     }//GEN-LAST:event_mnuCollaboratorManagerActionPerformed
 
     private void mnuAsignarPlusesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignarPlusesActionPerformed
         // TODO add your handling code here:
-        openFrmWindow(asignarPlusWin, "Asignar PLUS");
+        openFrmWindow(payrollWin, "PAYROOLL");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.plusesArrayList = plusWin.plusesArrayList;
         
@@ -269,7 +272,7 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane dkpPrincipal;
+    public static javax.swing.JDesktopPane dkpPrincipal;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;

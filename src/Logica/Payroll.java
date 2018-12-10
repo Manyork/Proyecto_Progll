@@ -18,14 +18,14 @@ public class Payroll {
     private String month;
     private Date payDate;
     Collaborator idCollaborator;
-    Position salary;
-    private float totalPlus;
-    private float totalSalary;
-    private float deductionsCCSS;
-    private float deductionsBP;
-    private float netSalary;
+    private double salary;
+    private double totalPlus;
+    private double totalSalary;
+    private double deductionsCCSS;
+    private double deductionsBP;
+    private double netSalary;
 
-    public Payroll(int idPayroll, Date creatrionDate, String month, Date payDate, Collaborator idCollaborator, Position salary, float totalPlus, float totalSalary, float deductionsCCSS, float deductionsBP, float netSalary) {
+    public Payroll(int idPayroll, Date creatrionDate, String month, Date payDate, Collaborator idCollaborator, double salary, double totalPlus, double totalSalary, double deductionsCCSS, double deductionsBP, double netSalary) {
         this.idPayroll = idPayroll;
         this.creatrionDate = creatrionDate;
         this.month = month;
@@ -45,7 +45,7 @@ public class Payroll {
         this.month = null;
         this.payDate = null;
         this.idCollaborator = null;
-        this.salary = null;
+        this.salary = 0;
         this.totalPlus = 0;
         this.totalSalary = 0;
         this.deductionsCCSS = 0;
@@ -93,52 +93,53 @@ public class Payroll {
         this.idCollaborator = idCollaborator;
     }
 
-    public Position getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(Position salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
-    public float getTotalPlus() {
+    public double getTotalPlus() {
         return totalPlus;
     }
 
-    public void setTotalPlus(float totalPlus) {
+    public void setTotalPlus(double totalPlus) {
         this.totalPlus = totalPlus;
     }
 
-    public float getTotalSalary() {
+    public double getTotalSalary() {
         return totalSalary;
     }
 
-    public void setTotalSalary(float totalSalary) {
+    public void setTotalSalary(double totalSalary) {
         this.totalSalary = totalSalary;
     }
 
-    public float getDeductionsCCSS() {
+    public double getDeductionsCCSS() {
         return deductionsCCSS;
     }
 
-    public void setDeductionsCCSS(float deductionsCCSS) {
+    public void setDeductionsCCSS(double deductionsCCSS) {
         this.deductionsCCSS = deductionsCCSS;
     }
 
-    public float getDeductionsBP() {
+    public double getDeductionsBP() {
         return deductionsBP;
     }
 
-    public void setDeductionsBP(float deductionsBP) {
+    public void setDeductionsBP(double deductionsBP) {
         this.deductionsBP = deductionsBP;
     }
 
-    public float getNetSalary() {
+    public double getNetSalary() {
         return netSalary;
     }
 
-    public void setNetSalary(float netSalary) {
+    public void setNetSalary(double netSalary) {
         this.netSalary = netSalary;
     }
+    
 
 }
