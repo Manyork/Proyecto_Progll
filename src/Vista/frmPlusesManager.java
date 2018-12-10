@@ -85,6 +85,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
 
                 }
             ));
+            tblPluses.setGridColor(new java.awt.Color(255, 255, 255));
             tblPluses.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     tblPlusesMouseClicked(evt);
@@ -206,13 +207,19 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
         if (txtId.isEnabled()) {
             if (!txtId.getText().isEmpty() && !txtTitle.getText().isEmpty() && !txtPercent.getText().isEmpty()) {
                 plusObj = new Plus(Integer.parseInt(txtId.getText()), txtTitle.getText(), Float.parseFloat(txtPercent.getText()));
-                if (plusesArrayList.add(plusObj)) {
-                    cleanFields();
-                    fillTable();
-                    JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                if (!alreadyExist(Integer.parseInt(txtId.getText()))) {
+                    if (plusesArrayList.add(plusObj)) {
+                        cleanFields();
+                        fillTable();
+                        JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+
+                    } else {
+                        JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    }
 
                 } else {
-                    JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showConfirmDialog(null, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+
                 }
             } else {
 
@@ -312,7 +319,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblPlusesMouseClicked
-   
+
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {
         if (plusesArrayList.size() > 0) {
@@ -326,8 +333,9 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
         }
 
     }
+
     //This method is used to clear field data
-        private void cleanFields() {
+    private void cleanFields() {
         txtId.setText(null);
         txtTitle.setText(null);
         txtPercent.setText(null);
@@ -347,5 +355,19 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtPercent;
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
+
+    private boolean alreadyExist(int id) {
+      
+       if(plusesArrayList.size()>0){
+        for (int i = 0; i < plusesArrayList.size(); i++) {
+           if(plusesArrayList.get(i).getIdPlus()==id){
+               return true;
+                          }
+            
+        }
+       }
+        
+        return false;
+    }
 
 }

@@ -11,8 +11,6 @@ import Logica.PlusCollaborator;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,8 +25,6 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
     DefaultListModel listAssigned = new DefaultListModel();
     DefaultListModel listUnAssigned = new DefaultListModel();
     PlusCollaborator pcObj = new PlusCollaborator();
-
-    DefaultTableModel temp;
 
     /**
      * Creates new form frmAsignPlusesCollaborator
@@ -83,6 +79,7 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -169,7 +166,6 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
@@ -200,7 +196,7 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         // TODO add your handling code here:
-        cmbFillCollaborator();
+      //  cmbFillCollaborator();
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void cmbDNIItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDNIItemStateChanged
@@ -223,7 +219,6 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
             pcObj = new PlusCollaborator(plusesArrayList.get(getArrayPlusPostion(lstToAssign.getSelectedValue())), collaboratorArrayList.get(getArrayColPostion(dni)));
             PlusCollaborator.add(pcObj);
             ListFill(Integer.parseInt(dni));
-
         }
 
 
@@ -239,6 +234,11 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        cmbFillCollaborator();
+    }//GEN-LAST:event_formInternalFrameOpened
     private int getArrayColPostion(String text) {
 
         String arrayCombo[] = text.split("-");
@@ -313,7 +313,6 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
     
     
     private int isAssginned(int dni, int idPlus) {
-
         for (int i = 0; i < PlusCollaborator.size(); i++) {
             int collaborator = PlusCollaborator.get(i).getIdCollaborator().getDNI();
             int plus = PlusCollaborator.get(i).getIdPlus().getIdPlus();

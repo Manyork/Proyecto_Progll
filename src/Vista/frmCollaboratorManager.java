@@ -10,7 +10,6 @@ import Logica.Plus;
 import Logica.PlusCollaborator;
 import Logica.Position;
 import static Vista.frmMain.dkpPrincipal;
-import java.awt.Component;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +34,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
     Collaborator collaObj = new Collaborator();
     String titulos[] = {"DNI", "NAME", "BIRTH DATE", "STAR DATE", "END DATE", "DIRECTION", "#PHONE", "EMAIL", "POSITION", "BOSS DNI"};
     DateFormat date = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-    frmAsignPlusesCollaborator asignarPlusWin;
+    frmAsignPlusesCollaborator asignarPlusWin = new frmAsignPlusesCollaborator();
 
     /**
      * Creates new form frmCollaboratorManager
@@ -44,11 +43,12 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public frmCollaboratorManager(frmMain aThis, ArrayList<Collaborator> colArrayList, ArrayList<Position> posArrayList, ArrayList<Plus> plusArrayList) {
+    public frmCollaboratorManager(frmMain aThis, ArrayList<Collaborator> colArrayList, ArrayList<Position> posArrayList, ArrayList<Plus> plusArrayList, ArrayList<PlusCollaborator> plusCollaborator) {
         initComponents();
         this.collaboratorArrayList = colArrayList;
         this.positionArrayList = posArrayList;
         this.plusesArrayList = plusArrayList;
+        this.plusesCollaborator = plusCollaborator;
     }
 
     /**
@@ -317,24 +317,29 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
             if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !dtpBirthDate.getDate().toString().isEmpty()
                     && !dtpStarDate.getDate().toString().isEmpty() && !txtDirection.getText().isEmpty() && !txtPhoneNumber.getText().isEmpty()
                     && !txtEmail.getText().isEmpty() && cmbPosition.getSelectedIndex() != 0) {
-                Integer bossDNI;
-                if (!txtBossDni.getText().isEmpty()) {
-                    bossDNI = Integer.parseInt(txtBossDni.getText());
-                } else {
-                    bossDNI = 0;
-                }
+                if (!alreadyExist(Integer.parseInt(txtId.getText()))) {
+                    Integer bossDNI;
+                    if (!txtBossDni.getText().isEmpty()) {
+                        bossDNI = Integer.parseInt(txtBossDni.getText());
+                    } else {
+                        bossDNI = 0;
+                    }
 
-                collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
-                        dtpEndDAte.getDate(), txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
-                        positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())), bossDNI);
-                if (collaboratorArrayList.add(collaObj)) {
-                    cleanFields();
-                    fillTable();
-                    cmbFillPos();
-                    JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),
+                            dtpEndDAte.getDate(), txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
+                            positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())), bossDNI);
+                    if (collaboratorArrayList.add(collaObj)) {
+                        cleanFields();
+                        fillTable();
+                        cmbFillPos();
+                        JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+
+                    } else {
+                        JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    }
 
                 } else {
-                    JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showConfirmDialog(null, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
                 }
             } else {
 
@@ -467,7 +472,6 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
             frmMain.dkpPrincipal.add(asignarPlusWin);
             asignarPlusWin.toFront();
             asignarPlusWin.setVisible(true);
-
         } else {
             asignarPlusWin.moveToFront();
         }
@@ -551,6 +555,20 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhoneNumber;
     // End of variables declaration//GEN-END:variables
+
+    private boolean alreadyExist(int id) {
+
+        if (collaboratorArrayList.size() > 0) {
+            for (int i = 0; i < collaboratorArrayList.size(); i++) {
+                if (collaboratorArrayList.get(i).getDNI() == id) {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
+    }
 
     private void cmbFillPos() {
         comboBoxModel.removeAllElements();

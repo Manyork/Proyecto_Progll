@@ -7,6 +7,7 @@ package Vista;
 
 import Logica.Plus;
 import Logica.Position;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -60,6 +61,23 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
             }};
 
             setClosable(true);
+            addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+                public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+                }
+                public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                    formInternalFrameOpened(evt);
+                }
+            });
 
             jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -188,7 +206,8 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
         if (txtId.isEnabled()) {
             if (!txtId.getText().isEmpty() && !txtPosition.getText().isEmpty() && !txtSalary.getText().isEmpty()) {
                 positionObj = new Position(Integer.parseInt(txtId.getText()), txtPosition.getText(), Float.parseFloat(txtSalary.getText()));
-                if (positionArrayList.add(positionObj)) {
+                if (!alreadyExist(Integer.parseInt(txtId.getText()))) {
+                    if (positionArrayList.add(positionObj)) {
                     cleanFields();
                     fillTable();
                     JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
@@ -196,6 +215,11 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                 } else {
                     JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
                 }
+
+                } else {
+                    JOptionPane.showConfirmDialog(null, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                }
+
             } else {
 
                 JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
@@ -219,7 +243,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                 JOptionPane.showConfirmDialog(null, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
                 fillTable();
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 JOptionPane.showConfirmDialog(null, "Modify process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
             }
@@ -255,7 +279,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                             fillTable();
 
                         }
-                    } catch (Exception e) {
+                    } catch (HeadlessException e) {
                     }
 
                 }
@@ -286,6 +310,11 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblPlusesMouseClicked
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        fillTable();
+    }//GEN-LAST:event_formInternalFrameOpened
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {
         if (positionArrayList.size() > 0) {
@@ -304,6 +333,19 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
         txtId.setText(null);
         txtPosition.setText(null);
         txtSalary.setText(null);
+    }
+           private boolean alreadyExist(int id) {
+
+        if (positionArrayList.size() > 0) {
+            for (int i = 0; i < positionArrayList.size(); i++) {
+                if (positionArrayList.get(i).getIdPosition() == id) {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
