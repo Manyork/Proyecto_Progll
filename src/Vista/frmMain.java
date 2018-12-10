@@ -11,8 +11,8 @@ import Logica.Plus;
 import Logica.PlusCollaborator;
 import Logica.Position;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JInternalFrame;
+import javax.swing.event.MenuDragMouseListener;
 
 /**
  *
@@ -27,7 +27,7 @@ public class frmMain extends javax.swing.JFrame {
     ArrayList<PlusCollaborator> plusesCollaborator = new ArrayList<>();
     frmPlusesManager plusWin = new frmPlusesManager(null, plusesArrayList);
     frmPositionManager positionWin = new frmPositionManager(this, positionArrayList);
-    frmCollaboratorManager collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList,plusesArrayList);
+    frmCollaboratorManager collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList,plusesArrayList,plusesCollaborator);
     frmPayroll payrollWin = new frmPayroll(this, collaboratorArrayList,payrollArrayList,plusesArrayList,plusesCollaborator);
 
     /**
@@ -46,21 +46,31 @@ public class frmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
         dkpPrincipal = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton3 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        mnuPluses = new javax.swing.JMenuItem();
-        mnuPositionMangaer = new javax.swing.JMenuItem();
-        mnuCollaboratorManager = new javax.swing.JMenuItem();
-        mnuAsignarPluses = new javax.swing.JMenuItem();
+        jButton1 = new javax.swing.JButton();
+        btnCollaboratorManager = new javax.swing.JButton();
+        btnPositionManager = new javax.swing.JButton();
+        btnPayrollManager = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu3.setText("File");
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Edit");
+        jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         javax.swing.GroupLayout dkpPrincipalLayout = new javax.swing.GroupLayout(dkpPrincipal);
         dkpPrincipal.setLayout(dkpPrincipalLayout);
@@ -70,7 +80,7 @@ public class frmMain extends javax.swing.JFrame {
         );
         dkpPrincipalLayout.setVerticalGroup(
             dkpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 823, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -78,16 +88,53 @@ public class frmMain extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("HOME");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add.png"))); // NOI18N
-        jButton3.setText("Plus Manager");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.setOpaque(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setBorderPainted(false
-        );
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carpeta.png"))); // NOI18N
+        jButton1.setText("PLUS MANAGER");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnCollaboratorManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/grupo.png"))); // NOI18N
+        btnCollaboratorManager.setText("COLLABORATOR MANAGER");
+        btnCollaboratorManager.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCollaboratorManager.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCollaboratorManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCollaboratorManagerActionPerformed(evt);
+            }
+        });
+
+        btnPositionManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/administracion.png"))); // NOI18N
+        btnPositionManager.setText("POSITION MANAGER");
+        btnPositionManager.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPositionManager.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPositionManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPositionManagerActionPerformed(evt);
+            }
+        });
+
+        btnPayrollManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar.png"))); // NOI18N
+        btnPayrollManager.setText("PAYROLL");
+        btnPayrollManager.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPayrollManager.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPayrollManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPayrollManagerActionPerformed(evt);
+            }
+        });
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida.png"))); // NOI18N
+        jButton6.setText("EXIT");
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
             }
         });
 
@@ -99,9 +146,18 @@ public class frmMain extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPositionManager, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCollaboratorManager, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnPayrollManager, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 25, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,119 +166,74 @@ public class frmMain extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(599, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPositionManager)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCollaboratorManager)
+                .addGap(18, 18, 18)
+                .addComponent(btnPayrollManager)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addContainerGap())
         );
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-
-        mnuPluses.setText("Pluses Manager");
-        mnuPluses.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuPlusesActionPerformed(evt);
-            }
-        });
-        jMenu2.add(mnuPluses);
-
-        mnuPositionMangaer.setText("Positions Manager");
-        mnuPositionMangaer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuPositionMangaerActionPerformed(evt);
-            }
-        });
-        jMenu2.add(mnuPositionMangaer);
-
-        mnuCollaboratorManager.setText("Collaborator Manager");
-        mnuCollaboratorManager.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCollaboratorManagerActionPerformed(evt);
-            }
-        });
-        jMenu2.add(mnuCollaboratorManager);
-
-        mnuAsignarPluses.setText("generate payroll");
-        mnuAsignarPluses.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuAsignarPlusesActionPerformed(evt);
-            }
-        });
-        jMenu2.add(mnuAsignarPluses);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(dkpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dkpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dkpPrincipal)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnuPlusesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPlusesActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         openFrmWindow(plusWin, "Pluses Manager");
-        this.plusesArrayList = plusWin.plusesArrayList;
-    }//GEN-LAST:event_mnuPlusesActionPerformed
+        this.plusesArrayList=plusWin.plusesArrayList;
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void mnuPositionMangaerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPositionMangaerActionPerformed
+    private void btnCollaboratorManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollaboratorManagerActionPerformed
         // TODO add your handling code here:
-        openFrmWindow(positionWin, "Position Manager");
-        this.positionArrayList = positionWin.positionArrayList;
-
-    }//GEN-LAST:event_mnuPositionMangaerActionPerformed
-
-    private void mnuCollaboratorManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCollaboratorManagerActionPerformed
-        // TODO add your handling code here:
-        openFrmWindow(collabWin, "Collaborator Manager");
+          openFrmWindow(collabWin, "Collaborator Manager");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.positionArrayList = positionWin.positionArrayList;
          this.plusesArrayList = plusWin.plusesArrayList;
-    }//GEN-LAST:event_mnuCollaboratorManagerActionPerformed
+         this.plusesCollaborator= collabWin.plusesCollaborator;
+    }//GEN-LAST:event_btnCollaboratorManagerActionPerformed
 
-    private void mnuAsignarPlusesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignarPlusesActionPerformed
+    private void btnPositionManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionManagerActionPerformed
         // TODO add your handling code here:
-        openFrmWindow(payrollWin, "PAYROOLL");
+         openFrmWindow(positionWin, "Position Manager");
+        this.positionArrayList = positionWin.positionArrayList;
+    }//GEN-LAST:event_btnPositionManagerActionPerformed
+
+    private void btnPayrollManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayrollManagerActionPerformed
+        // TODO add your handling code here:
+           openFrmWindow(payrollWin, "PAYROOLL");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.plusesArrayList = plusWin.plusesArrayList;
-        
-    }//GEN-LAST:event_mnuAsignarPlusesActionPerformed
+    }//GEN-LAST:event_btnPayrollManagerActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        java.util.Date fecha = new Date();
-        plusesArrayList.add(new Plus(1, "Plus1", 10));
-        plusesArrayList.add(new Plus(2, "Plus2", 20));
-        plusesArrayList.add(new Plus(3, "Plus2", 30));
-        positionArrayList.add(new Position(1, "Trailero", 3000));
-        positionArrayList.add(new Position(1, "Camionero", 2000));
-        positionArrayList.add(new Position(1, "Busero", 2000));
-        collaboratorArrayList.add(new Collaborator(11532024, "Manyor", fecha, fecha, fecha, "LasJuntas", 85697, "Email", positionArrayList.get(0), 1));
-        collaboratorArrayList.add(new Collaborator(15212123, "Manyor", fecha, fecha, fecha, "LasJuntas", 85697, "Email", positionArrayList.get(1), 0));
-        collaboratorArrayList.add(new Collaborator(45454545, "Manyor", fecha, fecha, fecha, "LasJuntas", 85697, "Email", positionArrayList.get(2), 1));
-        
-        
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton6ActionPerformed
 //This method open a Windows and set a default constructor
 
     public void openFrmWindow(JInternalFrame win, String title) {
@@ -230,6 +241,7 @@ public class frmMain extends javax.swing.JFrame {
             win.setTitle(title);
             dkpPrincipal.add(win);
             win.setVisible(true);
+            win.moveToFront();
         } else {
             win.moveToFront();
         }
@@ -272,17 +284,18 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCollaboratorManager;
+    private javax.swing.JButton btnPayrollManager;
+    private javax.swing.JButton btnPositionManager;
     public static javax.swing.JDesktopPane dkpPrincipal;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JMenuItem mnuAsignarPluses;
-    private javax.swing.JMenuItem mnuCollaboratorManager;
-    private javax.swing.JMenuItem mnuPluses;
-    private javax.swing.JMenuItem mnuPositionMangaer;
     // End of variables declaration//GEN-END:variables
 }

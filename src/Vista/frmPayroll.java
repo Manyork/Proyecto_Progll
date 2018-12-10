@@ -9,10 +9,14 @@ import Logica.Collaborator;
 import Logica.Payroll;
 import Logica.Plus;
 import Logica.PlusCollaborator;
-import Logica.Position;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +28,13 @@ public class frmPayroll extends javax.swing.JInternalFrame {
     ArrayList<Payroll> payrollArrayList;
     ArrayList<PlusCollaborator> plusCollArrayList;
     ArrayList<Plus> plusArrayList;
+    DefaultTableModel temp;
+    String titulos[] = {"PAYROLL ID", "CREATION DATE", "MONTH", "PAY DATE", "EMPLOYEE", "BASE SALARY", "TOTAL PLUS", " TOTAL SALARY", "CCSS", "BP", "NET SALARY"};
+    String months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+    DefaultComboBoxModel comboModelYears = new DefaultComboBoxModel();
+    frmQueryPayroll queryPayroll= new frmQueryPayroll();
+    
 
     /**
      * Creates new form frmPayroll
@@ -32,17 +43,13 @@ public class frmPayroll extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public frmPayroll(frmMain aThis, ArrayList<Collaborator> collArrayList, ArrayList<Payroll> payArrayList,  ArrayList<Plus> plusArrayList, ArrayList<PlusCollaborator> plusesCollaborator) {
+    public frmPayroll(frmMain aThis, ArrayList<Collaborator> collArrayList, ArrayList<Payroll> payArrayList, ArrayList<Plus> plusArrayList, ArrayList<PlusCollaborator> plusesCollaborator) {
         initComponents();
         this.collaboratorArrayList = collArrayList;
         this.payrollArrayList = payArrayList;
-        this.plusArrayList=plusArrayList;
-        this.plusCollArrayList=plusesCollaborator;
+        this.plusArrayList = plusArrayList;
+        this.plusCollArrayList = plusesCollaborator;
     }
-
-   
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,13 +68,16 @@ public class frmPayroll extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbMonth = new javax.swing.JComboBox<>();
+        cmbYears = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPayroll = new javax.swing.JTable();
 
+        setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -83,8 +93,11 @@ public class frmPayroll extends javax.swing.JInternalFrame {
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Generate Payroll"));
 
         jLabel1.setText("Current Date:");
 
@@ -99,11 +112,14 @@ public class frmPayroll extends javax.swing.JInternalFrame {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Payroll Check"));
+
         jButton2.setText("Preview");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -112,10 +128,10 @@ public class frmPayroll extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(71, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(cmbMonth, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbYears, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73))
         );
@@ -124,8 +140,8 @@ public class frmPayroll extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbYears, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
@@ -177,7 +193,7 @@ public class frmPayroll extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(56, 56, 56)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,25 +212,43 @@ public class frmPayroll extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        tblPayroll.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblPayroll);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(386, 386, 386)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(419, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,34 +263,85 @@ public class frmPayroll extends javax.swing.JInternalFrame {
     @SuppressWarnings("empty-statement")
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
         if (!DtpPaymentDate.getDate().toString().isEmpty()) {
             if (DtpPaymentDate.getDate().compareTo(dtpCurrentDate.getDate()) > 0) {
                 String month[] = DtpPaymentDate.getDate().toString().split(" ");
-                for (int i = 0; i < collaboratorArrayList.size(); i++) {
-                    Payroll PayrollObj = new Payroll(successiveNumber(), dtpCurrentDate.getDate(), month[1],
-                            DtpPaymentDate.getDate(), collaboratorArrayList.get(i),collaboratorArrayList.get(i).getPosition().getSalary(),
-                            getPlus(collaboratorArrayList.get(i)), getPlus(collaboratorArrayList.get(i)) + collaboratorArrayList.get(i).getPosition().getSalary(), 
-                            getCCSS(collaboratorArrayList.get(i)), getBP(collaboratorArrayList.get(i)), getNetSalary(collaboratorArrayList.get(i)));
-                    payrollArrayList.add(PayrollObj);
-
+                if (!verifyPayroll(month[1])) {
+                    for (int i = 0; i < collaboratorArrayList.size(); i++) {
+                        Payroll PayrollObj = new Payroll(successiveNumber(), dtpCurrentDate.getDate(), month[1],
+                                DtpPaymentDate.getDate(), collaboratorArrayList.get(i), collaboratorArrayList.get(i).getPosition().getSalary(),
+                                getPlus(collaboratorArrayList.get(i)), getTotalsalary(collaboratorArrayList.get(i)),
+                                getCCSS(collaboratorArrayList.get(i)), getBP(collaboratorArrayList.get(i)), getNetSalary(collaboratorArrayList.get(i)));
+                        payrollArrayList.add(PayrollObj);
+                        cleanFields();
+                        fillTable();
+                    }
+                } else {
+                    JOptionPane.showConfirmDialog(null, "Payroll already exist for this Month " + month[1], "Confirm Message", JOptionPane.DEFAULT_OPTION);
                 }
-
             } else {
 
-                JOptionPane.showConfirmDialog(null, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
-
+                JOptionPane.showConfirmDialog(null, "Invalid payment date, please check", "Confirm Message", JOptionPane.DEFAULT_OPTION);
             }
 
+        } else {
+
+            JOptionPane.showConfirmDialog(null, "Please, Complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        int year=2015;
+        for (String month : months) {
+            comboBoxModel.addElement(month);
+        }
+        
+        for (int i = 0; i < 15; i++) {
+           
+            comboModelYears.addElement(year++);
+        }
+        cmbMonth.setModel(comboBoxModel);
+        cmbYears.setModel(comboModelYears);
+
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+          if (!queryPayroll.isShowing()) {
+            queryPayroll = new frmQueryPayroll(this,payrollArrayList,Integer.parseInt(cmbYears.getSelectedItem().toString()),cmbMonth.getSelectedItem().toString());
+            queryPayroll.setTitle(title);
+            frmMain.dkpPrincipal.add(queryPayroll);
+            queryPayroll.toFront();
+            queryPayroll.setVisible(true);
+        } else {
+            queryPayroll.moveToFront();
+        }
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void fillTable() {
+        if (payrollArrayList.size() > 0) {
+            temp = new DefaultTableModel(null, titulos);
+            for (int i = 0; i < payrollArrayList.size(); i++) {
+
+                temp.addRow(new Object[]{payrollArrayList.get(i).getIdPayroll(), payrollArrayList.get(i).getCreatrionDate(), payrollArrayList.get(i).getPayDate(),
+                    payrollArrayList.get(i).getMonth(), payrollArrayList.get(i).getIdCollaborator().getDNI(),
+                    payrollArrayList.get(i).getIdCollaborator().getPosition().getSalary(), payrollArrayList.get(i).getTotalPlus(), payrollArrayList.get(i).getTotalSalary(),
+                    payrollArrayList.get(i).getDeductionsCCSS(), payrollArrayList.get(i).getDeductionsBP(), payrollArrayList.get(i).getNetSalary()});
+            }
+            this.tblPayroll.setModel(temp);
+        }
+
+    }
 
     public int successiveNumber() {
         return payrollArrayList.size();
     }
 
     public double getNetSalary(Collaborator coll) {
-        return (coll.getPosition().getSalary()-(getBP(coll)+getCCSS(coll)))+getPlus(coll);
+        double deduc = getBP(coll) + getCCSS(coll);
+        return getPlus(coll) + (getTotalsalary(coll) - deduc);
     }
 
     public double getBP(Collaborator coll) {
@@ -289,14 +374,24 @@ public class frmPayroll extends javax.swing.JInternalFrame {
         return totalPlus;
     }
 
+    public boolean verifyPayroll(String month) {
+        for (int i = 0; i < payrollArrayList.size(); i++) {
+            if (month.equals(payrollArrayList.get(i).getMonth())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker DtpPaymentDate;
+    private javax.swing.JComboBox<String> cmbMonth;
+    private javax.swing.JComboBox<String> cmbYears;
     private org.jdesktop.swingx.JXDatePicker dtpCurrentDate;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -304,6 +399,11 @@ public class frmPayroll extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblPayroll;
     // End of variables declaration//GEN-END:variables
+
+    private void cleanFields() {
+    }
 }
