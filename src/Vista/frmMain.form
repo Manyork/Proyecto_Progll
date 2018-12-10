@@ -40,7 +40,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuAsignarPluses">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Asignar Pluses"/>
+                <Property name="text" type="java.lang.String" value="generate payroll"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuAsignarPlusesActionPerformed"/>
@@ -99,6 +99,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="dkpPrincipal">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
