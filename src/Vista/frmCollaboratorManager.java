@@ -10,9 +10,6 @@ import Logica.Plus;
 import Logica.PlusCollaborator;
 import Logica.Position;
 import com.sun.glass.events.KeyEvent;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -112,6 +109,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                 public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
                 }
                 public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                    formInternalFrameOpened(evt);
                 }
             });
 
@@ -394,8 +392,8 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         //TODO add your handling code here:
-        if (tblCollaborator.getSelectedRowCount() > 0) {
-            txtId.setEnabled(true);
+        if (tblCollaborator.getSelectedRowCount() > 0 && !txtId.isEnabled()) {
+            //txtId.setEnabled(true);
             if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !dtpBirthDate.getDate().toString().isEmpty()
                     && !dtpStarDate.getDate().toString().isEmpty() && !txtDirection.getText().isEmpty() && !txtPhoneNumber.getText().isEmpty()
                     && !txtEmail.getText().isEmpty() && cmbPosition.getSelectedIndex() != 0) {
@@ -416,17 +414,12 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
                   collaObj = new Collaborator(Integer.parseInt(txtId.getText()), txtName.getText(), dtpBirthDate.getDate(), dtpStarDate.getDate(),txtDirection.getText(), Integer.parseInt(txtPhoneNumber.getText()), txtEmail.getText(),
                         positionArrayList.get(getArrayPostion(cmbPosition.getSelectedItem().toString())), bossDNI);
                  
-                 } 
-
-                
-
-               
+                 }          
 
                 try {
                     collaboratorArrayList.set(tblCollaborator.getSelectedRow(), collaObj);
                     cleanFields();
                     JOptionPane.showConfirmDialog(this, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
-
                     fillTable();
                 } catch (HeadlessException e) {
                     JOptionPane.showConfirmDialog(this, "Modify process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
@@ -435,11 +428,13 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
             } else {
 
-                JOptionPane.showConfirmDialog(this, "Please, complettxtIdinformation", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(this, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
             }
         } else {
             JOptionPane.showConfirmDialog(this, "You must select a row", "Confirm Message", JOptionPane.DEFAULT_OPTION);
         }
+        cleanFields();
+        txtId.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -501,7 +496,7 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
 
     private void tblCollaboratorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCollaboratorMouseClicked
         // TODO add your handling code here:
-        if (tblCollaborator.getSelectedRow() > 0) {
+        if (tblCollaborator.getSelectedRowCount()> 0) {
             if (evt.getClickCount() == 2) {
                 txtId.setEnabled(false);
                 txtId.setText(String.valueOf(collaboratorArrayList.get(tblCollaborator.getSelectedRow()).getDNI()));
@@ -555,6 +550,13 @@ public class frmCollaboratorManager extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         jNumbers(evt);
     }//GEN-LAST:event_txtBossDniKeyTyped
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+cleanFields();
+        cmbFillPos();
+        fillTable();
+    }//GEN-LAST:event_formInternalFrameOpened
 
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {

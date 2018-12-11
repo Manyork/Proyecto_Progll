@@ -24,10 +24,10 @@ public class frmMain extends javax.swing.JFrame {
     ArrayList<Position> positionArrayList = new ArrayList<>();
     ArrayList<Collaborator> collaboratorArrayList = new ArrayList<>();
     ArrayList<PlusCollaborator> plusesCollaborator = new ArrayList<>();
-    frmPlusesManager plusWin = new frmPlusesManager(null, plusesArrayList);
-    frmPositionManager positionWin = new frmPositionManager(this, positionArrayList);
-    frmCollaboratorManager collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList,plusesArrayList,plusesCollaborator);
-    frmPayroll payrollWin = new frmPayroll(this, collaboratorArrayList,payrollArrayList,plusesArrayList,plusesCollaborator);
+    frmPlusesManager plusWin ;
+    frmPositionManager positionWin;
+    frmCollaboratorManager collabWin;
+    frmPayroll payrollWin ;
 
     /**
      * Creates new form frmPrincipal
@@ -205,12 +205,14 @@ public class frmMain extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        plusWin = new frmPlusesManager(null, plusesArrayList);
         openFrmWindow(plusWin, "Pluses Manager");
         this.plusesArrayList=plusWin.plusesArrayList;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCollaboratorManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollaboratorManagerActionPerformed
         // TODO add your handling code here:
+        collabWin = new frmCollaboratorManager(this, collaboratorArrayList, positionArrayList,plusesArrayList,plusesCollaborator);
           openFrmWindow(collabWin, "Collaborator Manager");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.positionArrayList = positionWin.positionArrayList;
@@ -220,12 +222,14 @@ public class frmMain extends javax.swing.JFrame {
 
     private void btnPositionManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionManagerActionPerformed
         // TODO add your handling code here:
+        positionWin = new frmPositionManager(this, positionArrayList);
          openFrmWindow(positionWin, "Position Manager");
         this.positionArrayList = positionWin.positionArrayList;
     }//GEN-LAST:event_btnPositionManagerActionPerformed
 
     private void btnPayrollManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayrollManagerActionPerformed
         // TODO add your handling code here:
+        payrollWin = new frmPayroll(this, collaboratorArrayList,payrollArrayList,plusesArrayList,plusesCollaborator);
            openFrmWindow(payrollWin, "PAYROOLL");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.plusesArrayList = plusWin.plusesArrayList;
