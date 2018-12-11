@@ -6,6 +6,7 @@
 package Vista;
 
 import Logica.Plus;
+import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +42,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPluses = new javax.swing.JTable(){
@@ -48,14 +50,14 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                 return false;
             }};
             jPanel1 = new javax.swing.JPanel();
+            txtId = new javax.swing.JTextField();
+            txtTitle = new javax.swing.JTextField();
+            txtPercent = new javax.swing.JTextField();
             btnAdd = new javax.swing.JButton();
             btnUpdate = new javax.swing.JButton();
             btnDelete = new javax.swing.JButton();
             jLabel1 = new javax.swing.JLabel();
-            txtTitle = new javax.swing.JTextField();
             jLabel2 = new javax.swing.JLabel();
-            txtId = new javax.swing.JTextField();
-            txtPercent = new javax.swing.JTextField();
             jLabel3 = new javax.swing.JLabel();
 
             setClosable(true);
@@ -95,21 +97,68 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
 
             jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+            org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, txtTitle, org.jdesktop.beansbinding.ObjectProperty.create(), txtId, org.jdesktop.beansbinding.BeanProperty.create("nextFocusableComponent"));
+            bindingGroup.addBinding(binding);
+
+            txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    txtIdKeyTyped(evt);
+                }
+            });
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, txtPercent, org.jdesktop.beansbinding.ObjectProperty.create(), txtTitle, org.jdesktop.beansbinding.BeanProperty.create("nextFocusableComponent"));
+            bindingGroup.addBinding(binding);
+
+            txtTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    txtTitleKeyTyped(evt);
+                }
+            });
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, btnAdd, org.jdesktop.beansbinding.ObjectProperty.create(), txtPercent, org.jdesktop.beansbinding.BeanProperty.create("nextFocusableComponent"));
+            bindingGroup.addBinding(binding);
+
+            txtPercent.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    txtPercentActionPerformed(evt);
+                }
+            });
+            txtPercent.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    txtPercentKeyTyped(evt);
+                }
+            });
+
+            btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar.png"))); // NOI18N
             btnAdd.setText("Add");
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, btnUpdate, org.jdesktop.beansbinding.ObjectProperty.create(), btnAdd, org.jdesktop.beansbinding.BeanProperty.create("nextFocusableComponent"));
+            bindingGroup.addBinding(binding);
+
             btnAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnAddActionPerformed(evt);
                 }
             });
 
+            btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
             btnUpdate.setText("Update");
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, btnDelete, org.jdesktop.beansbinding.ObjectProperty.create(), btnUpdate, org.jdesktop.beansbinding.BeanProperty.create("nextFocusableComponent"));
+            bindingGroup.addBinding(binding);
+
             btnUpdate.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnUpdateActionPerformed(evt);
                 }
             });
 
+            btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
             btnDelete.setText("Delete");
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, txtId, org.jdesktop.beansbinding.ObjectProperty.create(), btnDelete, org.jdesktop.beansbinding.BeanProperty.create("nextFocusableComponent"));
+            bindingGroup.addBinding(binding);
+
             btnDelete.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnDeleteActionPerformed(evt);
@@ -119,18 +168,6 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
             jLabel1.setText("Id:");
 
             jLabel2.setText("Title:");
-
-            txtId.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    txtIdActionPerformed(evt);
-                }
-            });
-
-            txtPercent.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    txtPercentActionPerformed(evt);
-                }
-            });
 
             jLabel3.setText("%:");
 
@@ -147,7 +184,7 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(30, 30, 30)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLabel3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txtPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,19 +200,21 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(23, 23, 23)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnDelete)))
-                    .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnDelete))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(32, 32, 32))
             );
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,6 +238,8 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
+            bindingGroup.bind();
+
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
@@ -211,50 +252,54 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
                     if (plusesArrayList.add(plusObj)) {
                         cleanFields();
                         fillTable();
-                        JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                        JOptionPane.showConfirmDialog(this, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
                     } else {
-                        JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                        JOptionPane.showConfirmDialog(this, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
                     }
 
                 } else {
-                    JOptionPane.showConfirmDialog(null, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showConfirmDialog(this, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
                 }
             } else {
 
-                JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(this, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
             }
         } else {
 
-            JOptionPane.showConfirmDialog(null, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(this, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         //TODO add your handling code here:
-        txtId.setEnabled(true);
-        if (!txtId.getText().isEmpty() && !txtTitle.getText().isEmpty() && !txtPercent.getText().isEmpty()) {
-            plusObj = new Plus(Integer.parseInt(txtId.getText()), txtTitle.getText(), Float.parseFloat(txtPercent.getText()));
 
-            try {
-                plusesArrayList.set(tblPluses.getSelectedRow(), plusObj);
-                cleanFields();
-                JOptionPane.showConfirmDialog(null, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+        if (tblPluses.getSelectedRowCount() > 0) {
+            txtId.setEnabled(true);
+            if (!txtId.getText().isEmpty() && !txtTitle.getText().isEmpty() && !txtPercent.getText().isEmpty()) {
+                plusObj = new Plus(Integer.parseInt(txtId.getText()), txtTitle.getText(), Float.parseFloat(txtPercent.getText()));
 
-                fillTable();
-            } catch (Exception e) {
-                JOptionPane.showConfirmDialog(null, "Modify process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                try {
+                    plusesArrayList.set(tblPluses.getSelectedRow(), plusObj);
+                    cleanFields();
+                    JOptionPane.showConfirmDialog(this, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
+                    fillTable();
+                } catch (Exception e) {
+                    JOptionPane.showConfirmDialog(this, "Modify process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+
+                }
+
+            } else {
+
+                JOptionPane.showConfirmDialog(this, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
             }
 
         } else {
-
-            JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(this, "You must select a row", "Confirm Message", JOptionPane.DEFAULT_OPTION);
         }
-
-
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -264,18 +309,18 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
 
             if (a < 0) {
 
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(this,
                         "You must select a row");
             } else {
 
-                int confirmar = JOptionPane.showConfirmDialog(null,
+                int confirmar = JOptionPane.showConfirmDialog(this,
                         "Are you sure you want to delete this register?");
 
                 if (JOptionPane.OK_OPTION == confirmar) {
                     try {
                         plusesArrayList.remove(a);
                         modelList.removeRow(a);
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(this,
                                 "Register deleted");
                         if (plusesArrayList.size() > 1) {
                             fillTable();
@@ -292,10 +337,6 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
 
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
 
     private void txtPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPercentActionPerformed
         // TODO add your handling code here:
@@ -319,6 +360,34 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblPlusesMouseClicked
+
+    private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
+        // TODO add your handling code here:
+        char tecla;
+        tecla = evt.getKeyChar();
+        if (!Character.isLetter(tecla) && tecla != KeyEvent.VK_BACKSPACE) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txtTitleKeyTyped
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        char tecla;
+        tecla = evt.getKeyChar();
+        if (!Character.isDigit(tecla) && tecla != KeyEvent.VK_BACKSPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdKeyTyped
+
+    private void txtPercentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPercentKeyTyped
+        // TODO add your handling code here:
+        char tecla;
+        tecla = evt.getKeyChar();
+        if (!Character.isDigit(tecla) && tecla != KeyEvent.VK_BACKSPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPercentKeyTyped
 
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {
@@ -354,19 +423,20 @@ public class frmPlusesManager extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtPercent;
     private javax.swing.JTextField txtTitle;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     private boolean alreadyExist(int id) {
-      
-       if(plusesArrayList.size()>0){
-        for (int i = 0; i < plusesArrayList.size(); i++) {
-           if(plusesArrayList.get(i).getIdPlus()==id){
-               return true;
-                          }
-            
+
+        if (plusesArrayList.size() > 0) {
+            for (int i = 0; i < plusesArrayList.size(); i++) {
+                if (plusesArrayList.get(i).getIdPlus() == id) {
+                    return true;
+                }
+
+            }
         }
-       }
-        
+
         return false;
     }
 

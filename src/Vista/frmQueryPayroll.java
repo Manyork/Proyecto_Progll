@@ -8,6 +8,7 @@ package Vista;
 import Logica.Payroll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -111,6 +112,11 @@ public class frmQueryPayroll extends javax.swing.JInternalFrame {
                 }
             }
             this.tblPayroll.setModel(temp);
+        }else{
+        JOptionPane.showConfirmDialog(this, "No results found", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+        this.dispose();
+        
+        
         }
     }//GEN-LAST:event_formInternalFrameOpened
 

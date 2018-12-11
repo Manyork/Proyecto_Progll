@@ -36,6 +36,18 @@ public class Collaborator {
         this.position = position;
         this.bossDNI = bossDNI;
     }
+        public Collaborator(int DNI, String name, Date birthDate, Date startDate, String direction, int phoneNumbre, String email, Position position, int bossDNI) {
+        this.DNI = DNI;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.startDate = startDate;
+        this.direction = direction;
+        this.phoneNumbre = phoneNumbre;
+        this.email = email;
+        this.position = position;
+        this.bossDNI = bossDNI;
+    }
+
 
     public Collaborator() {
         this.DNI = 0;
