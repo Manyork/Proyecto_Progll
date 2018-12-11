@@ -87,6 +87,7 @@ public class frmAsignPlusesCollaborator extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(lstToAssign);
 
         lstAssigned.setBorder(javax.swing.BorderFactory.createTitledBorder("ASSIGNED"));
+        lstAssigned.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(lstAssigned);
 
         jLabel1.setText("DNI:");

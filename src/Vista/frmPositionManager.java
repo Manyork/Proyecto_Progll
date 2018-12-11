@@ -5,8 +5,8 @@
  */
 package Vista;
 
-import Logica.Plus;
 import Logica.Position;
+import com.sun.glass.events.KeyEvent;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -17,8 +17,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Manyor
  */
 public class frmPositionManager extends javax.swing.JInternalFrame {
-    
-     ArrayList<Position> positionArrayList;
+
+    ArrayList<Position> positionArrayList;
     DefaultTableModel modelList = new DefaultTableModel();
     String[] titles = {"ID", "Title", "Percent"};
     Position positionObj = new Position();
@@ -29,11 +29,11 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
     public frmPositionManager() {
         initComponents();
     }
-       public frmPositionManager(frmMain aThis,ArrayList<Position> arrayList) {
-        initComponents();
-          this.positionArrayList = arrayList;
-    }
 
+    public frmPositionManager(frmMain aThis, ArrayList<Position> arrayList) {
+        initComponents();
+        this.positionArrayList = arrayList;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,7 +55,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
         txtSalary = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPluses = new javax.swing.JTable(){
+        tblPosition = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int vColIndex) {
                 return false;
             }};
@@ -81,6 +81,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
 
             jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+            btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar.png"))); // NOI18N
             btnAdd.setText("Add");
             btnAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +89,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                 }
             });
 
+            btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
             btnUpdate.setText("Update");
             btnUpdate.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +97,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                 }
             });
 
+            btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
             btnDelete.setText("Delete");
             btnDelete.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,17 +107,33 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
 
             jLabel1.setText("Id:");
 
-            jLabel2.setText("Posotion:");
+            txtPosition.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    txtPositionKeyTyped(evt);
+                }
+            });
+
+            jLabel2.setText("Position:");
 
             txtId.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txtIdActionPerformed(evt);
                 }
             });
+            txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    txtIdKeyTyped(evt);
+                }
+            });
 
             txtSalary.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txtSalaryActionPerformed(evt);
+                }
+            });
+            txtSalary.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    txtSalaryKeyTyped(evt);
                 }
             });
 
@@ -133,11 +152,11 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(64, 64, 64)
+                    .addGap(19, 19, 19)
                     .addComponent(jLabel3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAdd)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnUpdate)
@@ -162,7 +181,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
-            tblPluses.setModel(new javax.swing.table.DefaultTableModel(
+            tblPosition.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
 
                 },
@@ -170,12 +189,12 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
 
                 }
             ));
-            tblPluses.addMouseListener(new java.awt.event.MouseAdapter() {
+            tblPosition.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblPlusesMouseClicked(evt);
+                    tblPositionMouseClicked(evt);
                 }
             });
-            jScrollPane1.setViewportView(tblPluses);
+            jScrollPane1.setViewportView(tblPosition);
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
@@ -208,73 +227,74 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                 positionObj = new Position(Integer.parseInt(txtId.getText()), txtPosition.getText(), Float.parseFloat(txtSalary.getText()));
                 if (!alreadyExist(Integer.parseInt(txtId.getText()))) {
                     if (positionArrayList.add(positionObj)) {
-                    cleanFields();
-                    fillTable();
-                    JOptionPane.showConfirmDialog(null, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                        cleanFields();
+                        fillTable();
+                        JOptionPane.showConfirmDialog(this, "Register added succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+
+                    } else {
+                        JOptionPane.showConfirmDialog(this, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    }
 
                 } else {
-                    JOptionPane.showConfirmDialog(null, "Register process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
-                }
-
-                } else {
-                    JOptionPane.showConfirmDialog(null, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showConfirmDialog(this, "This plus already exist", "Confirm Message", JOptionPane.DEFAULT_OPTION);
                 }
 
             } else {
 
-                JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(this, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
             }
         } else {
 
-            JOptionPane.showConfirmDialog(null, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(this, "Please, finish edition Process", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         //TODO add your handling code here:
+            if(tblPosition.getSelectedRowCount()>0){
         txtId.setEnabled(true);
         if (!txtId.getText().isEmpty() && !txtPosition.getText().isEmpty() && !txtSalary.getText().isEmpty()) {
             positionObj = new Position(Integer.parseInt(txtId.getText()), txtPosition.getText(), Float.parseFloat(txtSalary.getText()));
 
             try {
-                positionArrayList.set(tblPluses.getSelectedRow(), positionObj);
+                positionArrayList.set(tblPosition.getSelectedRow(), positionObj);
                 cleanFields();
-                JOptionPane.showConfirmDialog(null, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(this, "Register modified succesfully", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
                 fillTable();
             } catch (HeadlessException e) {
-                JOptionPane.showConfirmDialog(null, "Modify process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showConfirmDialog(this, "Modify process failed, Please try again", "Confirm Message", JOptionPane.DEFAULT_OPTION);
 
             }
 
         } else {
 
-            JOptionPane.showConfirmDialog(null, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showConfirmDialog(this, "Please, complete required information", "Confirm Message", JOptionPane.DEFAULT_OPTION);
         }
-
+}else{JOptionPane.showConfirmDialog(this, "You must select a row", "Confirm Message", JOptionPane.DEFAULT_OPTION);}
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         if (txtId.isEnabled()) {
-            int a = tblPluses.getSelectedRow();
+            int a = tblPosition.getSelectedRow();
 
             if (a < 0) {
 
-                JOptionPane.showMessageDialog(null,
-                    "You must select a row");
+                JOptionPane.showMessageDialog(this,
+                        "You must select a row");
             } else {
 
-                int confirmar = JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to delete this register?");
+                int confirmar = JOptionPane.showConfirmDialog(this,
+                        "Are you sure you want to delete this register?");
 
                 if (JOptionPane.OK_OPTION == confirmar) {
                     try {
                         positionArrayList.remove(a);
                         modelList.removeRow(a);
-                        JOptionPane.showMessageDialog(null,
-                            "Register deleted");
+                        JOptionPane.showMessageDialog(this,
+                                "Register deleted");
                         if (positionArrayList.size() > 1) {
                             fillTable();
 
@@ -299,22 +319,50 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSalaryActionPerformed
 
-    private void tblPlusesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPlusesMouseClicked
+    private void tblPositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPositionMouseClicked
         // TODO add your handling code here:
-        if (tblPluses.getSelectedRow() >= 0) {
+        if (tblPosition.getSelectedRow() >= 0) {
             if (evt.getClickCount() == 2) {
                 txtId.setEnabled(false);
-                txtId.setText(String.valueOf(positionArrayList.get(tblPluses.getSelectedRow()).getIdPosition()));
-                txtPosition.setText(positionArrayList.get(tblPluses.getSelectedRow()).getpName());
-                txtSalary.setText(String.valueOf(positionArrayList.get(tblPluses.getSelectedRow()).getSalary()));
+                txtId.setText(String.valueOf(positionArrayList.get(tblPosition.getSelectedRow()).getIdPosition()));
+                txtPosition.setText(positionArrayList.get(tblPosition.getSelectedRow()).getpName());
+                txtSalary.setText(String.valueOf(positionArrayList.get(tblPosition.getSelectedRow()).getSalary()));
             }
         }
-    }//GEN-LAST:event_tblPlusesMouseClicked
+    }//GEN-LAST:event_tblPositionMouseClicked
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
         fillTable();
     }//GEN-LAST:event_formInternalFrameOpened
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        char tecla;
+        tecla = evt.getKeyChar();
+        if (!Character.isDigit(tecla) && tecla != KeyEvent.VK_BACKSPACE) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txtIdKeyTyped
+
+    private void txtPositionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPositionKeyTyped
+        // TODO add your handling code here:
+        char tecla;
+        tecla = evt.getKeyChar();
+        if (!Character.isLetter(tecla) && tecla != KeyEvent.VK_BACKSPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPositionKeyTyped
+
+    private void txtSalaryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalaryKeyTyped
+        // TODO add your handling code here:
+        char tecla;
+        tecla = evt.getKeyChar();
+        if (!Character.isDigit(tecla) && tecla != KeyEvent.VK_BACKSPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtSalaryKeyTyped
     ////This method is used to full fill table based in Arraylist
     private void fillTable() {
         if (positionArrayList.size() > 0) {
@@ -324,17 +372,19 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
                 modelList.addRow(new Object[]{positionArrayList.get(i).getIdPosition(), positionArrayList.get(i).getpName(), positionArrayList.get(i).getSalary()});
             }
 
-            this.tblPluses.setModel(modelList);
+            this.tblPosition.setModel(modelList);
         }
 
     }
+
     //This method is used to clear field data
-        private void cleanFields() {
+    private void cleanFields() {
         txtId.setText(null);
         txtPosition.setText(null);
         txtSalary.setText(null);
     }
-           private boolean alreadyExist(int id) {
+
+    private boolean alreadyExist(int id) {
 
         if (positionArrayList.size() > 0) {
             for (int i = 0; i < positionArrayList.size(); i++) {
@@ -357,7 +407,7 @@ public class frmPositionManager extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblPluses;
+    private javax.swing.JTable tblPosition;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtPosition;
     private javax.swing.JTextField txtSalary;
