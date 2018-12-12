@@ -230,7 +230,7 @@ public class frmMain extends javax.swing.JFrame {
     private void btnPayrollManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayrollManagerActionPerformed
         // TODO add your handling code here:
         payrollWin = new frmPayroll(this, collaboratorArrayList,payrollArrayList,plusesArrayList,plusesCollaborator);
-           openFrmWindow(payrollWin, "PAYROOLL");
+        openFrmWindow(payrollWin, "PAYROOLL");
         this.collaboratorArrayList = collabWin.collaboratorArrayList;
         this.plusesArrayList = plusWin.plusesArrayList;
     }//GEN-LAST:event_btnPayrollManagerActionPerformed

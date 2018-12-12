@@ -76,7 +76,6 @@ public class frmPayroll extends javax.swing.JInternalFrame {
         setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameActivated(evt);
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -162,7 +161,7 @@ public class frmPayroll extends javax.swing.JInternalFrame {
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(cmbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(447, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,11 +253,6 @@ public class frmPayroll extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_formInternalFrameActivated
 
    
     private void btnGeneratePayrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneratePayrollActionPerformed
@@ -397,17 +391,31 @@ public class frmPayroll extends javax.swing.JInternalFrame {
     public double getPlus(Collaborator coll) {
         double totalPlus = 0;
         for (int i = 0; i < plusCollArrayList.size(); i++) {
-            int collaborator = plusCollArrayList.get(i).getIdCollaborator().getDNI();
             int plus = plusCollArrayList.get(i).getIdPlus().getIdPlus();
             for (int j = 0; j < plusArrayList.size(); j++) {
-                if (collaborator == coll.getDNI() && plus == plusArrayList.get(i).getIdPlus()) {
-                    totalPlus += (coll.getPosition().getSalary() * plusArrayList.get(i).getPercIncrement()) / 100;
+                if (plus == plusArrayList.get(j).getIdPlus()) {
+                    totalPlus += (coll.getPosition().getSalary() * plusArrayList.get(j).getPercIncrement()) / 100;
                 }
 
             }
         }
         return totalPlus;
     }
+    
+        public double getPlus2(Collaborator coll) {
+        double totalPlus = 0;
+        for (int i = 0; i < plusCollArrayList.size(); i++) {
+            if(coll.getDNI()==plusCollArrayList.get(i).getIdCollaborator().getDNI()){
+                for (int j = 0; j < plusArrayList.size(); j++) {
+                    if(plusArrayList.get(j).getIdPlus()==plusArrayList.get(i).getIdPlus()){
+                    totalPlus += (coll.getPosition().getSalary() * plusArrayList.get(j).getPercIncrement()) / 100;
+                    }
+                }
+            }
+        }
+        return totalPlus;
+    }
+    
 
     public boolean verifyPayroll(String month) {
         for (int i = 0; i < payrollArrayList.size(); i++) {
